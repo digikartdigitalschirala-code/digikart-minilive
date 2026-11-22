@@ -55,6 +55,7 @@ function EmployeeHome({ profile, permissions, rolePending, permissionWarning, on
 function EmployeeWorkspace({ profile, permissions, onLogout }) {
   const [active, setActive] = useState('leads');
   const [leads, setLeads] = useState([]);
+  const [customersById, setCustomersById] = useState({});
   const [followups, setFollowups] = useState([]);
   const [installations, setInstallations] = useState([]);
   const [busy, setBusy] = useState(false);
@@ -76,15 +77,44 @@ function EmployeeWorkspace({ profile, permissions, onLogout }) {
     if (!employeeId) return;
     setBusy(true); setNotice('');
     const [l, f, i] = await Promise.all([
-      (canLeads || canSales) ? supabase.from('leads').select('id,lead_code,customer_id,product_category,product_brand_model,status,priority,created_at,original_lead_owner_id').order('created_at',{ascending:false}).limit(150) : Promise.resolve({data:[],error:null}),
-      canLeads ? supabase.from('lead_followups').select('id,lead_id,scheduled_at,status,customer_response,followup_notes,task_assignee_id').order('scheduled_at',{ascending:false}).limit(150) : Promise.resolve({data:[],error:null}),
+      (canLeads || canSales) ? supabase.from('leads').select('id,lead_code,customer_id,product_category,product_brand_model,requirement_details,employee_remarks,status,priority,created_at,original_lead_owner_id,expected_purchase_date,approximate_budget,lead_source').order('created_at',{ascending:false}).limit(150) : Promise.resolve({data:[],error:null}),
+      canLeads ? supabase.from('lead_followups').select('id,lead_id,scheduled_at,status,customer_response,followup_notes,task_assignee_id,created_at,completed_at').order('scheduled_at',{ascending:false}).limit(300) : Promise.resolve({data:[],error:null}),
       canInstall ? supabase.from('installation_tasks').select('id,task_code,status,created_at,current_assignee_id,sale_item_id,item:sale_items(product_name,brand,model,detail:sale_installation_details(installation_address,customer_contact_number))').order('created_at',{ascending:false}).limit(100) : Promise.resolve({data:[],error:null})
     ]);
+    let customerMap = {};
+    const customerIds = [...new Set((l.data || []).map(x => x.customer_id).filter(Boolean))];
+    if (customerIds.length) {
+      const c = await supabase.from('customers').select('id,full_name,mobile_number,address').in('id', customerIds);
+      if (c.error) setNotice('Customer వివరాలు చదవడంలో సమస్య: ' + c.error.message);
+      else customerMap = Object.fromEntries((c.data || []).map(x => [x.id, x]));
+    }
     const errors = [l.error,f.error,i.error].filter(Boolean);
     if (errors.length) setNotice('డేటాబేస్ చదవడంలో సమస్య: '+errors.map(x=>x.message).join(' | '));
-    setLeads(l.data || []); setFollowups(f.data || []); setInstallations(i.data || []); setBusy(false);
+    setLeads(l.data || []); setCustomersById(customerMap); setFollowups(f.data || []); setInstallations(i.data || []); setBusy(false);
   }
   useEffect(() => { loadData(); }, [employeeId]);
+
+  function customerFor(lead) { return customersById[lead?.customer_id] || {}; }
+  function phoneDigits(value) { return String(value || '').replace(/\D/g, ''); }
+  function whatsappHref(value) {
+    let number = phoneDigits(value);
+    if (number.length === 10) number = '91' + number;
+    return number ? `https://wa.me/${number}` : '#';
+  }
+  function leadFollowups(leadId) { return followups.filter(x => x.lead_id === leadId); }
+  function leadCard(lead) {
+    const customer = customerFor(lead);
+    const phone = customer.mobile_number || '';
+    const history = leadFollowups(lead.id);
+    const ageHours = Math.max(0, (Date.now() - new Date(lead.created_at).getTime()) / 3600000);
+    const attempts = history.length;
+    return <article key={lead.id} style={{border:'1px solid #e5eaf2',borderRadius:12,padding:14,marginTop:10,background:'#fff'}}>
+      <div style={{display:'flex',justifyContent:'space-between',gap:10,flexWrap:'wrap'}}><b>{customer.full_name || 'Customer పేరు లేదు'} · {lead.lead_code}</b><span style={{fontSize:12,fontWeight:700,color:lead.priority==='high'?'#b42318':'#475467'}}>{String(lead.priority || 'medium').toUpperCase()} · {lead.status || 'new'}</span></div>
+      <div style={{marginTop:7,fontSize:14,lineHeight:1.7}}><div>📞 {phone || 'Mobile number లేదు'}</div><div>📍 {customer.address || 'Address ఇవ్వలేదు'}</div><div>Product: {lead.product_category || '—'} {lead.product_brand_model ? `· ${lead.product_brand_model}` : ''}</div><div>Created: {lead.created_at ? new Date(lead.created_at).toLocaleString('en-IN') : '—'} · Follow-up attempts: {attempts}</div><div>Protected period: {ageHours < 168 ? `${Math.ceil(168-ageHours)} గంటలు మిగిలి ఉన్నాయి` : '168 గంటలు పూర్తయ్యాయి'} </div>{lead.requirement_details && <div>Requirement: {lead.requirement_details}</div>}{lead.employee_remarks && <div>Remarks: {lead.employee_remarks}</div>}</div>
+      <div style={{display:'flex',gap:8,flexWrap:'wrap',marginTop:10}}>{phone && <><a href={`tel:${phoneDigits(phone)}`} style={{...btn,textDecoration:'none',background:'#16803c'}}>Call Now</a><a href={whatsappHref(phone)} target="_blank" rel="noreferrer" style={{...btn,textDecoration:'none',background:'#128c7e'}}>WhatsApp</a></>}</div>
+      {history.length>0 && <details style={{marginTop:10}}><summary>Follow-up History ({history.length})</summary>{history.map(h=><div key={h.id} style={{padding:'7px 0',borderBottom:'1px solid #edf0f4',fontSize:13}}>{new Date(h.scheduled_at).toLocaleString('en-IN')} · {h.status} · {h.customer_response || ''} · {h.followup_notes || ''}</div>)}</details>}
+    </article>;
+  }
 
   async function createLead(e) {
     e.preventDefault(); setBusy(true); setNotice('');
@@ -190,15 +220,19 @@ function EmployeeWorkspace({ profile, permissions, onLogout }) {
           <div>{label('Priority')}<select value={leadForm.priority} onChange={e=>setLeadForm({...leadForm,priority:e.target.value})} style={field}><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div>
           <div style={{gridColumn:'1/-1'}}>{label('Requirement / Remarks')}<textarea value={leadForm.details} onChange={e=>setLeadForm({...leadForm,details:e.target.value})} style={{...field,minHeight:70}}/></div>
         </div><button disabled={busy} style={{...btn,marginTop:14}}>{busy?'Saving...':'Lead Save'}</button></form>
-        <section style={panel}><h3>నా Leads ({leads.length})</h3>{leads.map(l=><div key={l.id} style={{padding:'10px 0',borderBottom:'1px solid #edf0f4'}}><b>{l.lead_code}</b> · {l.product_category} · {l.status} <small style={{color:'#667085'}}>({l.priority})</small></div>)}{!leads.length&&<p>Leads లేవు.</p>}</section>
+        <section style={panel}><h3>నా Leads ({leads.length})</h3>{leads.map(leadCard)}{!leads.length&&<p>Leads లేవు.</p>}</section>
       </>}
       {active==='followups' && <>
         <form onSubmit={createFollowup} style={panel}><h3>Follow-up నమోదు</h3><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:12}}><div>{label('Lead *')}<select required value={followForm.lead_id} onChange={e=>setFollowForm({...followForm,lead_id:e.target.value})} style={field}><option value="">Lead ఎంచుకోండి</option>{leads.map(l=><option value={l.id}>{l.lead_code} · {l.product_category}</option>)}</select></div><div>{label('Follow-up Date & Time *')}<input required type="datetime-local" value={followForm.scheduled_at} onChange={e=>setFollowForm({...followForm,scheduled_at:e.target.value})} style={field}/></div><div>{label('Customer Response')}<input value={followForm.response} onChange={e=>setFollowForm({...followForm,response:e.target.value})} style={field}/></div><div>{label('Notes')}<input value={followForm.notes} onChange={e=>setFollowForm({...followForm,notes:e.target.value})} style={field}/></div></div><button disabled={busy} style={{...btn,marginTop:14}}>Follow-up Save</button></form>
-        <section style={panel}><h3>Follow-up History</h3>{followups.map(f=><div key={f.id} style={{padding:'9px 0',borderBottom:'1px solid #edf0f4',display:'flex',justifyContent:'space-between',alignItems:'center',gap:10,flexWrap:'wrap'}}><div>{new Date(f.scheduled_at).toLocaleString()} · {f.status} · {f.followup_notes||f.customer_response||'—'}</div>{f.status!=='completed' && <button type="button" disabled={busy} onClick={()=>updateFollowupStatus(f.id,'completed')} style={{...btn,padding:'7px 10px'}}>Completed</button>}</div>)}{!followups.length&&<p>Follow-ups లేవు.</p>}</section>
+        <section style={panel}><h3>Follow-up History</h3>{followups.map(f=>{const lead=leads.find(x=>x.id===f.lead_id);const customer=lead?customerFor(lead):{};const phone=customer.mobile_number||'';return <div key={f.id} style={{padding:'10px 0',borderBottom:'1px solid #edf0f4'}}><b>{customer.full_name||'Customer'} · {lead?.lead_code||'Lead'}</b><div style={{fontSize:13,margin:'5px 0'}}>{new Date(f.scheduled_at).toLocaleString('en-IN')} · {f.status} · {f.followup_notes||f.customer_response||'—'}</div><div style={{display:'flex',gap:8,flexWrap:'wrap'}}>{phone&&<><a href={`tel:${phoneDigits(phone)}`} style={{...btn,textDecoration:'none',background:'#16803c'}}>Call Now</a><a href={whatsappHref(phone)} target="_blank" rel="noreferrer" style={{...btn,textDecoration:'none',background:'#128c7e'}}>WhatsApp</a></>}{f.status!=='completed'&&<button type="button" disabled={busy} onClick={()=>updateFollowupStatus(f.id,'completed')} style={{...btn,padding:'7px 10px'}}>Completed</button>}</div></div>})}{!followups.length&&<p>Follow-ups లేవు.</p>}</section>
       </>}
       {active==='sales' && canSales && <form onSubmit={createSale} style={panel}><h3>Sale Entry</h3><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(210px,1fr))',gap:12}}><div>{label('Converted Lead *')}<select required value={saleForm.lead_id} onChange={e=>setSaleForm({...saleForm,lead_id:e.target.value})} style={field}><option value="">Lead ఎంచుకోండి</option>{leads.map(l=><option value={l.id}>{l.lead_code} · {l.product_category}</option>)}</select></div><div>{label('Category *')}<input required value={saleForm.category} onChange={e=>setSaleForm({...saleForm,category:e.target.value})} style={field}/></div><div>{label('Product Name *')}<input required value={saleForm.product} onChange={e=>setSaleForm({...saleForm,product:e.target.value})} style={field}/></div><div>{label('Brand')}<input value={saleForm.brand} onChange={e=>setSaleForm({...saleForm,brand:e.target.value})} style={field}/></div><div>{label('Model')}<input value={saleForm.model} onChange={e=>setSaleForm({...saleForm,model:e.target.value})} style={field}/></div><div>{label('Quantity *')}<input type="number" min="1" required value={saleForm.quantity} onChange={e=>setSaleForm({...saleForm,quantity:e.target.value})} style={field}/></div><div>{label('Unit Price *')}<input type="number" min="0" step="0.01" required value={saleForm.unit_price} onChange={e=>setSaleForm({...saleForm,unit_price:e.target.value})} style={field}/></div></div><div style={{display:'flex',gap:18,flexWrap:'wrap',margin:'16px 0'}}><label><input type="checkbox" checked={saleForm.service} onChange={e=>setSaleForm({...saleForm,service:e.target.checked})}/> Service Call Required</label><label><input type="checkbox" checked={saleForm.installation} onChange={e=>setSaleForm({...saleForm,installation:e.target.checked})}/> Installation Required</label></div>{(saleForm.service||saleForm.installation)&&<div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(210px,1fr))',gap:12}}><div>{label('Serial Number')}<input value={saleForm.serial} onChange={e=>setSaleForm({...saleForm,serial:e.target.value})} style={field}/></div><div>{label('Order Reference')}<input value={saleForm.order_ref} onChange={e=>setSaleForm({...saleForm,order_ref:e.target.value})} style={field}/></div><div>{label(saleForm.installation ? 'Customer Contact *' : 'Customer Contact')}<input required={saleForm.installation} value={saleForm.contact} onChange={e=>setSaleForm({...saleForm,contact:e.target.value})} style={field}/></div>{saleForm.installation && <div style={{gridColumn:'1/-1'}}>{label('Installation Address *')}<textarea required value={saleForm.installation_address} onChange={e=>setSaleForm({...saleForm,installation_address:e.target.value})} style={{...field,minHeight:65}}/></div>}<div>{label('Remarks')}<input value={saleForm.remarks} onChange={e=>setSaleForm({...saleForm,remarks:e.target.value})} style={field}/></div></div>}<button disabled={busy} style={{...btn,marginTop:14}}>Sale Save</button></form>}
       {active==='installations' && canInstall && <section style={panel}><h3>Pending Installation Tasks ({installations.length})</h3>{installations.map(t=><div key={t.id} style={{padding:'12px 0',borderBottom:'1px solid #edf0f4',display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap'}}><div><b>{t.task_code}</b><div style={{fontSize:13,color:'#344054'}}>{t.item?.product_name || 'Installation' } {t.item?.brand || ''} {t.item?.model || ''}</div><div style={{fontSize:13,color:'#667085'}}>Status: {t.status} · Created: {new Date(t.created_at).toLocaleString()}</div>{t.item?.detail?.[0]?.installation_address && <div style={{fontSize:12,color:'#475467'}}>Address: {t.item.detail[0].installation_address}</div>}{t.item?.detail?.[0]?.customer_contact_number && <div style={{fontSize:12,color:'#475467'}}>Contact: {t.item.detail[0].customer_contact_number}</div>}</div>{t.status==='pending' && <button disabled={busy} onClick={()=>claimInstallation(t.id)} style={btn}>Claim Task</button>}{t.status==='in_progress' && <span style={{fontSize:12,color:'#475467'}}>{t.current_assignee_id===employeeId?'మీరు Claim చేశారు':'ఇప్పటికే Claim అయింది'}</span>}</div>)}{!installations.length&&<p>Pending Installation Tasks లేవు.</p>}</section>}
-      {active==='records' && <section style={panel}><h3>My Records</h3><p>Leads: {leads.length} · Follow-ups: {followups.length}</p><button onClick={loadData} style={btn}>Refresh Records</button></section>}
+      {active==='records' && <>
+        <section style={panel}><h3>My Records</h3><p>Leads: {leads.length} · Follow-ups: {followups.length}</p><button onClick={loadData} disabled={busy} style={btn}>{busy?'Refreshing...':'Refresh Records'}</button></section>
+        <section style={panel}><h3>నా Lead Records ({leads.length})</h3>{leads.map(leadCard)}{!leads.length&&<p>మీకు సంబంధించిన Leads లేవు.</p>}</section>
+        <section style={panel}><h3>నా Follow-up Records ({followups.length})</h3>{followups.map(f=>{const lead=leads.find(x=>x.id===f.lead_id);const customer=lead?customerFor(lead):{};const phone=customer.mobile_number||'';return <div key={f.id} style={{padding:'10px 0',borderBottom:'1px solid #edf0f4'}}><b>{customer.full_name||'Customer'} · {lead?.lead_code||'Lead'}</b><div style={{fontSize:13,margin:'5px 0'}}>{new Date(f.scheduled_at).toLocaleString('en-IN')} · {f.status} · {f.followup_notes||f.customer_response||'—'}</div>{phone&&<div style={{display:'flex',gap:8}}><a href={`tel:${phoneDigits(phone)}`} style={{...btn,textDecoration:'none',background:'#16803c'}}>Call</a><a href={whatsappHref(phone)} target="_blank" rel="noreferrer" style={{...btn,textDecoration:'none',background:'#128c7e'}}>WhatsApp</a></div>}</div>})}{!followups.length&&<p>Follow-ups లేవు.</p>}</section>
+      </>}
       {busy && <p style={{color:'#667085'}}>దయచేసి వేచి ఉండండి…</p>}
     </main>
   </div>;
