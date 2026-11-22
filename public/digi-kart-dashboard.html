@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="te">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digi Kart Digitals | Responsive Business Dashboard</title>
+<style>
+:root{--navy:#071b43;--navy2:#102e67;--blue:#1765e8;--ink:#14213d;--muted:#6b7891;--line:#e5ebf5;--bg:#f4f7fc;--white:#fff;--green:#0b9d58;--shadow:0 5px 18px #18345d12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans Telugu","Nirmala UI",system-ui,sans-serif}button{font:inherit}.app{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:246px;background:linear-gradient(180deg,#06183b,#0c2c63 78%,#123d82);color:#fff;padding:20px 14px;display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 22px;border-bottom:1px solid #ffffff22}.brandmark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1684ff,#ffb21a);display:grid;place-items:center;font-weight:900;font-size:19px;color:#fff}.brand b{font-size:17px;letter-spacing:.2px}.brand small{display:block;color:#b9c9e8;font-size:11px;margin-top:3px}.nav{display:grid;gap:5px;margin-top:18px}.nav a{color:#dce7fb;text-decoration:none;padding:11px 12px;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:12px}.nav a.active,.nav a:hover{background:#1b61d5;color:white}.nav .ico{width:20px;text-align:center;font-size:16px}.sidefoot{margin-top:auto;color:#a9bddf;font-size:11px;padding:15px 8px 4px}.main{margin-left:246px;min-height:100vh}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:4}.search{width:min(480px,42vw);background:#f6f8fc;border:1px solid var(--line);border-radius:11px;padding:11px 14px;color:#77839a;font-size:13px}.topright{display:flex;align-items:center;gap:18px}.circlebtn{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:#fff;position:relative}.dot{position:absolute;right:-4px;top:-5px;background:#e53954;color:#fff;border-radius:20px;font-size:10px;padding:2px 5px}.profile{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}.profile img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #e7efff}.content{padding:25px 28px 38px;max-width:1800px;margin:auto}.welcome{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}.eyebrow{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase}.welcome h1{font-size:25px;margin:5px 0}.welcome p{margin:0;color:var(--muted);font-size:13px}.filters{display:flex;gap:9px}.filter{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:12px;color:#34415b}.hero{border-radius:17px;overflow:hidden;background:linear-gradient(105deg,#071c47 0%,#174d9b 54%,#f18c2c 100%);color:white;min-height:150px;padding:23px 27px;display:flex;align-items:center;justify-content:space-between;position:relative;box-shadow:var(--shadow);margin-bottom:18px}.hero:after{content:"";position:absolute;width:270px;height:270px;border-radius:50%;background:#ffffff12;right:16%;top:-140px}.hero h2{font-size:23px;line-height:1.45;margin:0 0 8px;max-width:620px}.hero p{font-size:12px;color:#d8e7ff;margin:0}.hero-tag{background:#ffffff20;border:1px solid #ffffff45;padding:10px 14px;border-radius:12px;font-size:12px;z-index:1}.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:16px}.card{background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:16px;min-width:0}.kpi{padding:15px 16px;position:relative;overflow:hidden}.kpihead{display:flex;align-items:center;justify-content:space-between;color:#596985;font-size:12px;font-weight:650}.kpiicon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px}.kpi strong{display:block;font-size:24px;margin:10px 0 5px;letter-spacing:-.5px}.trend{font-size:11px;color:var(--green);font-weight:700}.analytics{grid-template-columns:1.45fr 1fr 1fr;margin-bottom:15px}.cardtitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}.cardtitle h3{font-size:14px;margin:0}.sub{font-size:11px;color:var(--muted)}.chart{width:100%;height:190px;display:block}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:#5c6982}.legend span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}.midgrid{grid-template-columns:1fr 1fr 1.1fr;margin-bottom:15px}.targetnums{display:flex;justify-content:space-between;gap:12px;margin:10px 0}.targetnums b{font-size:19px}.targetnums small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.progress{height:10px;border-radius:20px;background:#e8edf5;overflow:hidden}.progress i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#16a05b,#5bd58d)}.taskrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef1f6;font-size:12px}.taskrow:last-child{border:0}.pill{border-radius:20px;background:#fff1d5;color:#9b6500;padding:4px 9px;font-size:11px;font-weight:800}.leader{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid #eef1f6}.leader:last-child{border:0}.leader img{width:38px;height:38px;object-fit:cover;border-radius:50%}.leader b{font-size:12px}.leader small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.leader .amount{margin-left:auto;text-align:right;font-size:12px;font-weight:800}.lower{grid-template-columns:1fr 1fr;margin-bottom:15px}.bars{height:160px;display:flex;align-items:end;gap:12px;padding:10px 5px 0;border-bottom:1px solid var(--line)}.barcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:end;font-size:10px;color:var(--muted)}.bar{width:min(28px,70%);border-radius:6px 6px 0 0;background:linear-gradient(180deg,#55a5ff,#1765e8)}.bar.best{background:linear-gradient(180deg,#42d58a,#0b9d58)}.quick{grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:15px}.action{border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px 8px;text-align:center;font-size:11px;font-weight:700;color:#35425d;box-shadow:var(--shadow)}.action i{display:block;font-style:normal;font-size:21px;margin-bottom:7px}.activity{grid-template-columns:1.15fr .85fr}.activityrow{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #eef1f6;font-size:12px}.activityrow:last-child{border:0}.activityrow .symbol{width:30px;height:30px;border-radius:9px;background:#eef5ff;display:grid;place-items:center}.activityrow small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.activityrow time{margin-left:auto;color:var(--muted);font-size:10px;white-space:nowrap}.bottomnav{display:none}
+@media(max-width:1250px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.analytics{grid-template-columns:1.2fr 1fr}.analytics .quickcard{grid-column:1/-1}.quick{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:900px){.sidebar{width:210px}.main{margin-left:210px}.content{padding:20px}.topbar{padding:0 20px}.midgrid{grid-template-columns:1fr 1fr}.midgrid .leadercard{grid-column:1/-1}.activity{grid-template-columns:1fr}.lower{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){body{padding-bottom:76px}.sidebar{display:none}.main{margin:0}.topbar{height:62px;padding:0 13px}.brandmobile{display:flex;align-items:center;gap:8px;font-weight:850;font-size:14px}.brandmobile .brandmark{width:34px;height:34px;font-size:15px}.search{display:none}.topright{gap:8px}.circlebtn{width:34px;height:34px}.profile{gap:6px}.profile img{width:34px;height:34px}.profile span{display:none}.content{padding:15px 12px 20px}.welcome{align-items:flex-start;margin-bottom:13px}.welcome h1{font-size:20px}.welcome p{font-size:11px}.filters{display:none}.hero{min-height:125px;padding:17px;border-radius:13px;margin-bottom:12px}.hero h2{font-size:18px;max-width:75%}.hero p{font-size:10px;max-width:75%}.hero-tag{font-size:10px;padding:8px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:11px}.kpi{padding:12px}.kpi strong{font-size:21px;margin:7px 0 3px}.kpihead{font-size:10px}.kpiicon{width:29px;height:29px;font-size:14px}.trend{font-size:10px}.analytics{grid-template-columns:1fr;gap:10px;margin-bottom:10px}.analytics .quickcard{grid-column:auto}.card{padding:13px;border-radius:13px}.cardtitle h3{font-size:13px}.chart{height:165px}.midgrid{grid-template-columns:1fr;gap:10px;margin-bottom:10px}.midgrid .leadercard{grid-column:auto}.targetnums b{font-size:17px}.lower{grid-template-columns:1fr;gap:10px;margin-bottom:10px}.quick{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.action{padding:10px 4px;font-size:10px;border-radius:11px}.action i{font-size:19px;margin-bottom:4px}.activity{grid-template-columns:1fr;gap:10px}.bottomnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));z-index:8;box-shadow:0 -4px 15px #0c285012}.bottomnav a{text-decoration:none;color:#71809b;text-align:center;font-size:9px;font-weight:700}.bottomnav a b{display:block;font-size:19px;margin-bottom:2px}.bottomnav a.active{color:#1765e8}.leader img{width:35px;height:35px}.activityrow{font-size:11px}.activityrow time{font-size:9px}}
+@media(min-width:651px){.brandmobile{display:none}}
+
+/* Employee Management preview additions */
+.employee-view{display:none;padding:26px 28px 36px}
+.employee-view.show{display:block}
+.employee-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.employee-head h2{margin:0;font-size:22px;color:var(--ink)}
+.employee-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.employee-btn{border:0;border-radius:10px;background:var(--blue);color:#fff;padding:11px 16px;font-weight:700;cursor:pointer}
+.employee-btn.secondary{background:#edf2fb;color:var(--ink);border:1px solid var(--line)}
+.employee-panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow)}
+.employee-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.employee-tools input{flex:1;min-width:220px;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font:inherit}
+.employee-empty{text-align:center;padding:42px 16px;color:var(--muted)}
+.employee-empty strong{display:block;color:var(--ink);font-size:16px;margin:10px 0 6px}
+.employee-empty .empty-icon{font-size:34px}
+.employee-note{margin-top:14px;padding:12px 14px;border-radius:10px;background:#fff8e8;color:#80520a;font-size:12px;line-height:1.6}
+.employee-modal{display:none;position:fixed;inset:0;background:#071b4380;z-index:20;align-items:center;justify-content:center;padding:16px}
+.employee-modal.open{display:flex}
+.employee-dialog{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:16px;padding:22px;box-shadow:0 20px 60px #071b4340}
+.employee-dialog h3{margin:0 0 6px;font-size:19px}
+.employee-dialog .hint{margin:0 0 18px;color:var(--muted);font-size:12px}
+.employee-form{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.employee-field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#34425d}
+.employee-field input,.employee-field select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+.employee-form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px;flex-wrap:wrap}
+.employee-toast{display:none;margin-top:12px;padding:11px;border-radius:9px;background:#edf7ff;color:#174b83;font-size:13px}
+@media(max-width:650px){.employee-view{padding:20px 14px 90px}.employee-form{grid-template-columns:1fr}.employee-dialog{padding:17px}}
+
+</style>
+</head>
+<body><div class="app">
+<aside class="sidebar"><div class="brand"><div class="brandmark">DK</div><div><b>Digi Kart Digitals</b><small>Lead & Sales Management System</small></div></div><nav class="nav"><a class="active" href="#" data-page="dashboard"><span class="ico">▦</span> Dashboard</a><a href="#"><span class="ico">♙</span> Customers</a><a href="#"><span class="ico">⚑</span> Leads & Enquiries</a><a href="#"><span class="ico">☎</span> Follow-ups</a><a href="#"><span class="ico">🛒</span> Sales & Payments</a><a href="#"><span class="ico">🎁</span> Incentives</a><a href="#"><span class="ico">🛠</span> Service Records</a><a href="#"><span class="ico">▣</span> Installation</a><a href="#"><span class="ico">♧</span> Campaigns</a><a href="#" data-page="employees"><span class="ico">♟</span> Employees (HR)</a><a href="#"><span class="ico">▦</span> Attendance & Salary</a><a href="#"><span class="ico">▤</span> Reports & Analytics</a><a href="#"><span class="ico">◉</span> Training & Motivation</a><a href="#"><span class="ico">☏</span> Team Chat</a><a href="#"><span class="ico">♧</span> Notifications</a><a href="#"><span class="ico">⚙</span> Settings</a></nav><div class="sidefoot">Digi Kart Digitals · Corporate Workspace<br>Responsive UI Concept</div></aside>
+<main class="main"><header class="topbar"><div class="brandmobile"><div class="brandmark">DK</div>Digi Kart Digitals</div><div class="search">⌕ &nbsp; Search customer, lead, sale, service, IMEI…</div><div class="topright"><button class="circlebtn">＋</button><button class="circlebtn">♧<span class="dot">12</span></button><button class="circlebtn">▤<span class="dot" style="background:#0b9d58">3</span></button><div class="profile"><img src="admin-avatar.png" alt="Admin profile"><span>Admin<br><small style="color:#8290a6;font-weight:500">Super Admin</small></span>⌄</div></div></header>
+<section class="content" id="dashboardView"><div class="welcome"><div><div class="eyebrow">Business Overview / Admin Workspace</div><h1>శుభోదయం, Admin 👋</h1><p>మీ వ్యాపార పనితీరు – ఈరోజు ముఖ్యమైన వివరాలు</p></div><div class="filters"><button class="filter">⌂ &nbsp; Main Store ▾</button><button class="filter">▦ &nbsp; ఈ నెల ▾</button></div></div>
+<div class="hero"><div><h2>ఈరోజు మీ ప్రయత్నమే<br>రేపటి విజయానికి మెట్టుదారి!</h2><p>లక్ష్యంపై దృష్టి పెట్టండి · ప్రతి కస్టమర్‌తో మంచి అనుభవం సృష్టించండి</p></div><div class="hero-tag">మోటివేషన్ · రోజువారీ సందేశం</div></div>
+<div class="grid kpis"><div class="card kpi"><div class="kpihead">మొత్తం కస్టమర్లు <span class="kpiicon" style="background:#e7f1ff;color:#1765e8">♟</span></div><strong>1,248</strong><div class="trend">↗ 12 ఈ వారం</div></div><div class="card kpi"><div class="kpihead">యాక్టివ్ Leads <span class="kpiicon" style="background:#e7f5ff;color:#0783c9">⚑</span></div><strong>86</strong><div class="trend">↗ 18 కొత్త Leads</div></div><div class="card kpi"><div class="kpihead">ఈ రోజు Sales <span class="kpiicon" style="background:#e8f8ef;color:#0b9d58">🛒</span></div><strong>₹1,26,000</strong><div class="trend">↗ 12% వృద్ధి</div></div><div class="card kpi"><div class="kpihead">Service Calls <span class="kpiicon" style="background:#fff1e3;color:#df791a">⚒</span></div><strong>14</strong><div class="trend" style="color:#d97706">3 పెండింగ్</div></div><div class="card kpi"><div class="kpihead">Installations <span class="kpiicon" style="background:#fceafa;color:#c0268d">▦</span></div><strong>29</strong><div class="trend">↗ 25 పూర్తయ్యాయి</div></div><div class="card kpi"><div class="kpihead">Approved Incentives <span class="kpiicon" style="background:#f0eaff;color:#7c3aed">🎁</span></div><strong>₹32,500</strong><div class="trend">↗ 18% వృద్ధి</div></div></div>
+<div class="grid analytics"><div class="card"><div class="cardtitle"><h3>▥ &nbsp; Sales Trend</h3><span class="sub">ఈ నెల · ₹</span></div><svg class="chart" viewBox="0 0 520 190" preserveAspectRatio="none"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2f83f6" stop-opacity=".28"/><stop offset="1" stop-color="#2f83f6" stop-opacity="0"/></linearGradient></defs><g stroke="#e9eef6" stroke-width="1"><path d="M35 25H510M35 65H510M35 105H510M35 145H510"/></g><path d="M35 142 L105 125 L175 92 L245 108 L315 65 L385 80 L455 35 L505 45 L505 165 L35 165Z" fill="url(#area)"/><path d="M35 142 L105 125 L175 92 L245 108 L315 65 L385 80 L455 35 L505 45" fill="none" stroke="#1765e8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><g fill="#fff" stroke="#1765e8" stroke-width="3"><circle cx="35" cy="142" r="4"/><circle cx="105" cy="125" r="4"/><circle cx="175" cy="92" r="4"/><circle cx="245" cy="108" r="4"/><circle cx="315" cy="65" r="4"/><circle cx="385" cy="80" r="4"/><circle cx="455" cy="35" r="4"/><circle cx="505" cy="45" r="4"/></g><g fill="#7b879c" font-size="10"><text x="30" y="183">1</text><text x="100" y="183">5</text><text x="170" y="183">9</text><text x="238" y="183">13</text><text x="308" y="183">17</text><text x="378" y="183">21</text><text x="448" y="183">25</text><text x="493" y="183">30</text></g></svg><div class="legend"><span style="--c:#1765e8">Sales Value</span><span style="--c:#a9c8f8">Previous Period</span></div></div>
+<div class="card"><div class="cardtitle"><h3>◉ &nbsp; Lead Conversion</h3><span class="sub">ఈ నెల</span></div><div style="display:flex;align-items:center;justify-content:center;gap:18px;min-height:145px"><div style="width:130px;height:130px;border-radius:50%;background:conic-gradient(#0b9d58 0 36%,#2784ee 36% 78%,#f5a623 78% 91%,#dce3ee 91%);display:grid;place-items:center"><div style="width:82px;height:82px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-weight:850;font-size:22px">36%<small style="display:block;font-size:9px;color:#758198;font-weight:500">Conversion</small></div></div><div class="sub" style="line-height:2.1">🟢 Converted 36%<br>🔵 Follow-up 42%<br>🟠 Not Interested 13%<br>⚪ Other 9%</div></div></div>
+<div class="card quickcard"><div class="cardtitle"><h3>⚡ &nbsp; Today's Tasks</h3><span class="sub">అన్నీ చూడండి ›</span></div><div class="taskrow">☎ &nbsp; Pending Follow-ups <span class="pill">12</span></div><div class="taskrow">⚒ &nbsp; Service Callbacks <span class="pill">3</span></div><div class="taskrow">▣ &nbsp; Pending Installations <span class="pill">5</span></div><div class="taskrow">★ &nbsp; Approval Requests <span class="pill">4</span></div></div></div>
+<div class="grid midgrid"><div class="card"><div class="cardtitle"><h3>🎯 &nbsp; ఈ నెల లక్ష్యం & ప్రగతి</h3><span class="sub">67%</span></div><div class="targetnums"><div><small>నెల లక్ష్యం</small><b>₹10,00,000</b></div><div><small>ప్రస్తుత Sales</small><b style="color:#0b9d58">₹6,72,000</b></div></div><div class="progress"><i style="width:67%"></i></div><div class="sub" style="margin-top:9px">లక్ష్యానికి ఇంకా ₹3,28,000 అవసరం</div></div><div class="card"><div class="cardtitle"><h3>✓ &nbsp; నేటి ముఖ్య పనులు</h3><span class="sub">వివరాలు ›</span></div><div class="taskrow">Follow-up చేయాల్సిన Leads <span class="pill">12</span></div><div class="taskrow">Pending Service Calls <span class="pill">3</span></div><div class="taskrow">Pending Incentive Review <span class="pill">5</span></div><div class="taskrow">ఈ రోజు Target Reminder <span style="color:#0b9d58">✓</span></div></div><div class="card leadercard"><div class="cardtitle"><h3>🏆 &nbsp; Top Performer</h3><span class="sub">ఈ వారం</span></div><div class="leader"><img src="admin-avatar.png" alt="Employee photo"><div><b>Prasad</b><small>Sales Executive · Rank #1</small></div><div class="amount">₹3,45,000<small>48 Sales</small></div></div><div class="leader"><img src="admin-avatar.png" alt="Employee photo"><div><b>Employee 02</b><small>Sales Executive · Rank #2</small></div><div class="amount">₹2,86,000<small>39 Sales</small></div></div></div></div>
+<div class="grid lower"><div class="card"><div class="cardtitle"><h3>▥ &nbsp; వారాల వారీ Sales</h3><span class="sub">ఈ నెల</span></div><div class="bars"><div class="barcol"><b>68K</b><div class="bar" style="height:42%"></div>Week 1</div><div class="barcol"><b>72K</b><div class="bar" style="height:50%"></div>Week 2</div><div class="barcol"><b>92K</b><div class="bar" style="height:70%"></div>Week 3</div><div class="barcol"><b>1.1L</b><div class="bar best" style="height:90%"></div>Week 4</div></div></div><div class="card"><div class="cardtitle"><h3>◉ &nbsp; Lead Sources</h3><span class="sub">ఈ నెల</span></div><div style="display:flex;align-items:center;gap:20px;padding:12px 0"><div style="width:112px;height:112px;border-radius:50%;background:conic-gradient(#1765e8 0 42%,#0b9d58 42% 70%,#f5aa24 70% 86%,#9b43d4 86% 94%,#b9c3d2 94%);display:grid;place-items:center"><div style="width:68px;height:68px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-size:18px;font-weight:800">356<small style="font-size:9px;color:#71809b">Total</small></div></div><div class="sub" style="line-height:2">🔵 Walk-in – 42%<br>🟢 Field Lead – 28%<br>🟠 Campaign – 16%<br>🟣 Referral – 8%<br>⚪ Other – 6%</div></div></div></div>
+<div class="card" style="margin-bottom:15px"><div class="cardtitle"><h3>⚡ &nbsp; Quick Actions</h3><span class="sub">మీకు అవసరమైన పనులు</span></div><div class="grid quick"><div class="action"><i style="color:#0b9d58">⊕</i>కొత్త Lead</div><div class="action"><i style="color:#1765e8">🛒</i>Sale Entry</div><div class="action"><i style="color:#7c3aed">⚒</i>Service Record</div><div class="action"><i style="color:#e07a1a">☎</i>Follow-up</div><div class="action"><i style="color:#c0268d">▣</i>Installation</div><div class="action"><i style="color:#0b8f98">₹</i>Payments</div><div class="action"><i style="color:#1765e8">▤</i>Reports</div></div></div>
+<div class="grid activity"><div class="card"><div class="cardtitle"><h3>◷ &nbsp; Recent Activities</h3><span class="sub">అన్నీ చూడండి ›</span></div><div class="activityrow"><span class="symbol">🛒</span><div>Sale Recorded – INV#7842<small>₹43,000 · Prasad</small></div><time>5 నిమిషాల క్రితం</time></div><div class="activityrow"><span class="symbol">⚒</span><div>Service Updated – SRV#7642<small>Status changed</small></div><time>12 నిమిషాల క్రితం</time></div><div class="activityrow"><span class="symbol">▣</span><div>Installation Booked – INS#4389<small>Provider assigned</small></div><time>18 నిమిషాల క్రితం</time></div><div class="activityrow"><span class="symbol">♟</span><div>New Lead Assigned – LEAD#11876<small>Follow-up task created</small></div><time>25 నిమిషాల క్రితం</time></div></div><div class="card"><div class="cardtitle"><h3>♧ &nbsp; Notifications</h3><span class="sub">అన్నీ చూడండి ›</span></div><div class="activityrow"><span class="symbol">🎁</span><div>Incentive Approval<small>5 approvals need review</small></div><time>Now</time></div><div class="activityrow"><span class="symbol">▦</span><div>Installation Reminder<small>3 bookings scheduled</small></div><time>Today</time></div><div class="activityrow"><span class="symbol">⚠</span><div>Service Callback<small>2 callbacks overdue</small></div><time>Today</time></div></div></div>
+<p class="sub" style="text-align:center;margin:20px 0 0">డిజి కార్ట్ డిజిటల్స్ · మేనేజ్‌మెంట్ డాష్‌బోర్డ్</p>
+</section>
+<section class="employee-view" id="employeeView" aria-label="Employee Management">
+  <div class="employee-head">
+    <div>
+      <h2>♟ Employee Management</h2>
+      <p>సిబ్బంది వివరాలు నిర్వహణ</p>
+    </div>
+    <button class="employee-btn" id="openEmployeeForm" type="button">＋ Add Employee</button>
+  </div>
+  <div class="employee-panel">
+    <div class="employee-tools">
+      <input id="employeeSearch" type="search" placeholder="Employee ID / పేరు / మొబైల్ నంబర్ ద్వారా వెతకండి" aria-label="Search employees">
+      <button class="employee-btn secondary" id="backToDashboard" type="button">← Dashboard</button>
+    </div>
+    <div class="employee-empty">
+      <div class="empty-icon">♟</div>
+      <strong>Employee వివరాలు ఇంకా నమోదు కాలేదు</strong>
+      <span>కొత్త Employee వివరాలు నమోదు చేయడానికి “Add Employee” క్లిక్ చేయండి.</span>
+    </div>
+    <div class="employee-note">
+      ఈ ఫారం ద్వారా Employee వివరాలు Supabase Database‌లో సేవ్ అవుతాయి. Admin అనుమతి తప్పనిసరి.
+    </div>
+  </div>
+</section>
+<div class="employee-modal" id="employeeModal" role="dialog" aria-modal="true" aria-labelledby="employeeDialogTitle">
+  <div class="employee-dialog">
+    <h3 id="employeeDialogTitle">Add New Employee</h3>
+    <p class="hint">వివరాలు నమోదు చేసి Create Employee నొక్కండి. వివరాలు Supabaseలో సేవ్ అవుతాయి.</p>
+    <form id="employeeCreateForm">
+      <div class="employee-form">
+        <div class="employee-field"><label for="empId">Employee ID *</label><input id="empId" required placeholder="ఉదా: DKEMP001"></div>
+        <div class="employee-field"><label for="empName">Full Name *</label><input id="empName" required placeholder="Employee పేరు"></div>
+        <div class="employee-field"><label for="empMobile">Mobile Number *</label><input id="empMobile" required inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10 digit mobile"></div>
+        <div class="employee-field"><label for="empDesignation">Designation *</label><input id="empDesignation" required placeholder="ఉదా: Sales Executive"></div>
+        <div class="employee-field"><label for="empRole">Role *</label><select id="empRole" required><option value="">Select Role</option><option>Manager</option><option>Sales</option><option>Service</option><option>Accounts</option></select></div>
+        <div class="employee-field"><label for="empSalary">Monthly Salary (₹) *</label><input id="empSalary" type="number" min="0" required placeholder="ఉదా: 10000"></div>
+        <div class="employee-field"><label for="empPassword">Login Password *</label><input id="empPassword" type="password" required minlength="8" placeholder="Minimum 8 characters"></div>
+        <div class="employee-field"><label for="empStatus">Status</label><select id="empStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+      </div>
+      <div class="employee-toast" id="employeeCreateMessage" role="status"></div>
+      <div class="employee-form-actions">
+        <button class="employee-btn secondary" id="closeEmployeeForm" type="button">Cancel</button>
+        <button class="employee-btn" id="createEmployeeSubmit" type="submit">Create Employee</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</main>
+<nav class="bottomnav"><a class="active" href="#"><b>⌂</b>Home</a><a href="#"><b>⚑</b>Leads</a><a href="#"><b>🛒</b>Sales</a><a href="#"><b>▤</b>Reports</a><a href="#"><b>☻</b>Profile</a></nav>
+</div>
+<script>
+(function(){
+  const dashboard = document.getElementById('dashboardView');
+  const employees = document.getElementById('employeeView');
+  const modal = document.getElementById('employeeModal');
+  const form = document.getElementById('employeeCreateForm');
+  const message = document.getElementById('employeeCreateMessage');
+  const submitButton = document.getElementById('createEmployeeSubmit');
+  let activeRequestId = null;
+
+  function showPage(page){
+    if(!dashboard || !employees) return;
+    const isEmployees = page === 'employees';
+    dashboard.style.display = isEmployees ? 'none' : '';
+    employees.classList.toggle('show', isEmployees);
+    document.querySelectorAll('.nav a[data-page]').forEach(function(link){
+      link.classList.toggle('active', link.dataset.page === page);
+    });
+    if(isEmployees) window.scrollTo(0,0);
+  }
+
+  document.querySelectorAll('[data-page="employees"]').forEach(function(link){
+    link.addEventListener('click', function(event){ event.preventDefault(); showPage('employees'); });
+  });
+  document.querySelectorAll('[data-page="dashboard"]').forEach(function(link){
+    link.addEventListener('click', function(event){ event.preventDefault(); showPage('dashboard'); });
+  });
+  document.getElementById('backToDashboard').addEventListener('click', function(){ showPage('dashboard'); });
+
+  function showMessage(text, isError){
+    message.textContent = text;
+    message.style.display = 'block';
+    message.style.background = isError ? '#fff0f0' : '#edf7ff';
+    message.style.color = isError ? '#a32121' : '#174b83';
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    form.reset();
+    message.style.display = 'none';
+    message.textContent = '';
+    activeRequestId = null;
+    submitButton.disabled = false;
+    submitButton.textContent = 'Create Employee';
+  }
+
+  document.getElementById('openEmployeeForm').addEventListener('click', function(){
+    modal.classList.add('open');
+    document.getElementById('empId').focus();
+  });
+  document.getElementById('closeEmployeeForm').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(event){ if(event.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(event){ if(event.key === 'Escape') closeModal(); });
+
+  form.addEventListener('submit', function(event){
+    event.preventDefault();
+    if(!form.reportValidity() || activeRequestId) return;
+
+    const payload = {
+      employeeId: document.getElementById('empId').value.trim(),
+      name: document.getElementById('empName').value.trim(),
+      mobileNumber: document.getElementById('empMobile').value.trim(),
+      designation: document.getElementById('empDesignation').value.trim(),
+      role: document.getElementById('empRole').value,
+      monthlySalary: document.getElementById('empSalary').value,
+      password: document.getElementById('empPassword').value,
+      status: document.getElementById('empStatus').value
+    };
+
+    if(payload.password.length < 8){
+      showMessage('Password కనీసం 8 అక్షరాలు ఉండాలి.', true);
+      return;
+    }
+
+    activeRequestId = (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : String(Date.now()) + '-' + Math.random().toString(16).slice(2);
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Creating...';
+    showMessage('Employee account సృష్టిస్తోంది. దయచేసి వేచి ఉండండి...', false);
+
+    window.parent.postMessage({
+      type: 'DK_CREATE_EMPLOYEE',
+      requestId: activeRequestId,
+      payload: payload
+    }, window.location.origin);
+  });
+
+  window.addEventListener('message', function(event){
+    if(event.origin !== window.location.origin || event.source !== window.parent) return;
+    const result = event.data || {};
+    if(result.type !== 'DK_CREATE_EMPLOYEE_RESULT' || result.requestId !== activeRequestId) return;
+
+    submitButton.disabled = false;
+    submitButton.textContent = 'Create Employee';
+    activeRequestId = null;
+
+    if(result.success){
+      const createdId = result.data && result.data.employeeId ? result.data.employeeId : '';
+      showMessage('Employee account విజయవంతంగా సృష్టించబడింది. Employee ID: ' + createdId, false);
+      document.getElementById('empPassword').value = '';
+      form.reset();
+    } else {
+      const errorText = result.error || (result.data && result.data.error) || 'Employee account సృష్టించలేకపోయాం.';
+      showMessage('Error: ' + errorText, true);
+    }
+  });
+})();
+</script>
+
+</body></html>
+PS C:\Users\User\digi-kart-mini-live>
